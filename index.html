@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="main">
-    <ul>
+    <ul class="stepper">
       <li>
         <i class="icon icon-one fas fa-info active"></i>
         <div class="progress one active">
@@ -37,31 +37,27 @@
         <p class="text text-three">Results</p>
       </li>
     </ul>
+    <div class="content">
+      <p>
+        This is a 15 questions quiz to test your knowledge on AWS Cloud concepts, services, and terminology. You will have 30 seconds per question. Good luck!
+      </p><br>
+      <p>The AWS Certified Cloud Practitioner offers a foundational understanding of AWS Cloud concepts, services, and terminology. This is a good starting point for individuals in non-technical roles with no prior IT or cloud experience or for those with on-premises IT experience looking for basic AWS Cloud fluency. This certification can give candidates the confidence to tackle role-based AWS Certifications.
+      This certification is intended for candidates who may be:</p>
+      <ul>
+        <li>From a non-IT background and exploring a career in the AWS Cloud</li>
+        <li>In sales/marketing/business analyst roles looking to communicate more effectively with stakeholders and customers about the AWS Cloud</li>
+        <li>In on-premises IT or cloud roles, but new to AWS Cloud, and need a primer before diving into role-based AWS Certification(s)</li></ul>
+    </div>
+    <div class="buttons">
+      <!-- <button class="btn prev" value="">Previous</button> -->
+      <button class="btn next" value="2">Start Quiz &nbsp;<i class="fas fa-arrow-right"></i></button>
+    </div>
   </div>
-  <!-- Previous and Next buttons -->
-  <div class="buttons">
-    <button class="btn prev">Previous</button>
-    <button class="btn next">Next</button>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
 
 <!-- stepper component js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="assets/js/questions.js"></script>
 <script src="assets/js/scripts.js"></script>

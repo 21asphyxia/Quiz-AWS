@@ -7,50 +7,50 @@
 body {
   background: #ffc266;
 }
-
-.main {
+body .main {
   color: #252F3E;
   font-family: "Poppins", sans-serif;
   min-width: 400px;
   width: 100%;
+  height: 100vh;
   max-height: 100vh;
   overflow-y: hidden;
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-
-ul {
-  margin-top: 20px;
+body .main .stepper {
+  margin-bottom: 10px;
   width: 400px;
   display: flex;
   align-items: center;
 }
-ul li {
+body .main .stepper li {
   width: 200px;
   list-style: none;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-ul li .icon {
+body .main .stepper li .icon {
   color: #252F3E;
   font-size: 25px;
 }
-ul li .icon.active {
+body .main .stepper li .icon.active {
   color: #ff4732;
   transition: all 0.5s ease;
 }
-ul li .text {
+body .main .stepper li .text {
   font-size: 14px;
   font-weight: 600;
   color: #252F3E;
 }
-ul li .text.active {
+body .main .stepper li .text.active {
   color: #ff4732;
   transition: all 0.5s ease;
 }
-ul li .progress {
+body .main .stepper li .progress {
   transition: all 0.5s ease;
   width: 30px;
   height: 30px;
@@ -61,16 +61,16 @@ ul li .progress {
   place-items: center;
   color: #fff;
   position: relative;
-  cursor: pointer;
 }
-ul li .progress .fas {
+body .main .stepper li .progress.one::after {
+  width: 0 !important;
+  height: 0;
+}
+body .main .stepper li .progress .fas {
   color: #252F3E;
   display: none;
 }
-ul li .progress p {
-  font-size: 13px;
-}
-ul li .progress::after {
+body .main .stepper li .progress::after {
   content: " ";
   position: absolute;
   width: 104px;
@@ -79,61 +79,61 @@ ul li .progress::after {
   right: 30px;
   transition: all 0.5s ease;
 }
-ul li .progress.active {
+body .main .stepper li .progress.active {
   background-color: #ff4732;
   transition: all 0.5s ease;
 }
-ul li .progress.active p {
+body .main .stepper li .progress.active p {
   display: none;
 }
-ul li .progress.active .fas {
+body .main .stepper li .progress.active .fas {
   font-size: 20px;
   display: flex;
 }
-ul li .progress.active::after {
+body .main .stepper li .progress.active::after {
   background-color: #ff4732;
   transition: all 0.5s ease;
 }
+body .main .content {
+  border: #252F3E 5px solid;
+  border-radius: 10px;
+  text-align: justify;
+  margin-top: 20px;
+  width: 70%;
+  min-width: 390px;
+  max-height: 50%;
+  padding: 20px;
+  overflow: auto;
+}
+body .main .content ul {
+  -webkit-margin-before: 10px;
+          margin-block-start: 10px;
+  -webkit-margin-after: 1em;
+          margin-block-end: 1em;
+  -webkit-padding-start: 30px;
+          padding-inline-start: 30px;
+}
 
 /* Progress Div Css  */
-.one::after {
-  width: 0 !important;
-  height: 0;
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
-
-.next {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #ff4732;
-  color: #fff;
+.buttons .btn {
   padding: 10px 20px;
   border-radius: 5px;
-  cursor: pointer;
+  border: none;
+  background-color: #ff4732;
+  color: white;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.5s 0.3s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-.next:hover {
-  background-color: #ff4732;
-  color: #fff;
-}
-
-.prev {
-  position: absolute;
-  bottom: 0;
-  transform: translateY(-50%);
+.buttons .btn:hover {
   background-color: #ff4732;
   color: #252F3E;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.5s 0.3s ease;
-}
-.prev:hover {
-  background-color: #ff4732;
-  color: #fff;
 }/*# sourceMappingURL=style.css.map */
