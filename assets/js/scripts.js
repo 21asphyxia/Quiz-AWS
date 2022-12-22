@@ -74,7 +74,7 @@ function questionShower() {
     else{
         content.previousElementSibling.innerText = "You have completed the quiz!";
         html += `
-        <button class="card">Click below to see Results!</button>`
+        <button class="card" style="flex:unset;width:60%;">Click below to see Results!</button>`
         html += `</div>`;
         content.innerHTML = html;
         document.querySelector(".buttons").innerHTML = `<button class="btn next" id="next">See Results</button>`;
