@@ -152,6 +152,17 @@ body .main .content .cards .card:hover {
   transform: scale(1.05);
   transition: all 0.2s;
 }
+body .main .content .answerCard {
+  background-color: #252F3E;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+body .main .content .answerCard p {
+  margin-top: 12px;
+  text-align: start;
+}
 
 /* Progress Div Css  */
 .buttons {

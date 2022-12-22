@@ -1,3 +1,5 @@
+let score;
+let quizQuestions = [];
 function statusModifier($status) {
     if($status == 2 ){
         document.querySelector(".two").classList.add("active");
@@ -6,7 +8,6 @@ function statusModifier($status) {
         questionShower();
         // hide button
         document.querySelector("#next").style.display = "none";
-        document.querySelector(".buttons").innerHTML = `<button class="btn next" id="next-question">Next Question</button>`;
         score = 0;
 
     }
@@ -68,6 +69,7 @@ function questionShower() {
                 questionShower();
             });
         });
+        quizQuestions.push(question);
     }
     else{
         content.previousElementSibling.innerText = "You have completed the quiz!";
@@ -84,5 +86,36 @@ function questionShower() {
                 statusModifier(3);
             }
         }
+    }
+}
+
+function seeResults() {
+    document.querySelector(".content").innerHTML = `<h2>Results</h2>`;
+    document.querySelector(".content").innerHTML += `<p>You got ${score} out of ${quizQuestions.length} questions correct!</p>`;
+    document.querySelector(".buttons").innerHTML = `<button class="btn next" id="restart">Restart Quiz</button>
+    <button class="btn next" id="answers">See Answers</button>
+    `;
+    document.querySelector("#restart").onclick = function() {
+        location.reload();
+    }
+    document.querySelector("#answers").onclick = function() {
+        seeAnswers();
+    }
+}
+
+function seeAnswers() {
+    document.querySelector(".content").innerHTML = `<h2>Answers</h2>`;
+    quizQuestions.forEach(question => {
+        document.querySelector(".content").innerHTML += `
+        <div class="answerCard">
+            <h3>${question.question}</h3>
+            <p>Correct Answer:<br> ${question.choices[question.correct]}</p>
+            <p>Explanation :<br>${question.explanation}</p>
+        </div>
+        `;
+    });
+    document.querySelector(".buttons").innerHTML = `<button class="btn next" id="restart">Restart Quiz</button>`;
+    document.querySelector("#restart").onclick = function() {
+        location.reload();
     }
 }

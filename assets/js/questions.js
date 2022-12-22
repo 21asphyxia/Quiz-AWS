@@ -8,6 +8,7 @@ let questions = [
             D: "Users can permanently run enough instances to handle peak workloads."
       },
         correct: "C",
+        explanation: "The ability to launch instances on demand when needed allows users to launch and terminate instances in response to a varying workload. This is a more economical practice than purchasing enough on-premises servers to handle the peak load"
     },
     {
         question: "Which AWS service would simplify the migration of a database to AWS?",
@@ -18,6 +19,7 @@ let questions = [
             D: "Amazon AppStream 2.0",
         },
         correct: "B",
+        explanation: "AWS DMS helps users migrate databases to AWS quickly and securely. The source database remains fully operational during the migration, minimizing downtime to applications that rely on the database. AWS DMS can migrate data to and from most widely used commercial and open-source databases."
     },
     {
         question: " Which AWS offering enables users to find, buy, and immediately start using software solutions in their AWS environment?",
@@ -28,6 +30,7 @@ let questions = [
             D: "AWS Marketplace",
         },
         correct: "D",
+        explanation: "AWS Marketplace is a digital catalog with thousands of software listings from independent software vendors that makes it easy to find, test, buy, and deploy software that runs on AWS."
     },
     {
         question:"Which AWS networking service enables a company to create a virtual network within AWS?",
@@ -36,8 +39,8 @@ let questions = [
             B: "Amazon Route 53",
             C: "AWS Direct Connect",
             D: "Amazon Virtual Private Cloud (Amazon VPC)"},
-        correct: "D"
-      ,
+        correct: "D",
+        explanation: "– Amazon VPC lets users provision a logically isolated section of the AWS Cloud where users can launch AWS resources in a virtual network that they define."      
     },
     {
         question: "Which of the following is an AWS responsibility under the AWS shared responsibility model?",
@@ -47,6 +50,7 @@ let questions = [
             C: "Securing application access and data",
             D: "Managing guest operating systems"},
         correct: "B",
+        explanation: "Maintaining physical hardware is an AWS responsibility under the AWS shared responsibility model."
     },
     {
         question: "Which component of the AWS global infrastructure does Amazon CloudFront use to ensure low-latency delivery?",
@@ -56,6 +60,7 @@ let questions = [
             C: "Availability Zones",
             D: "Virtual Private Cloud (VPC)"},
         correct: "B",
+        explanation: "To deliver content to users with lower latency, Amazon CloudFront uses a global network of points of presence (edge locations and regional edge caches) worldwide."
     },
     {
         question: "How would a system administrator add an additional layer of login security to a user's AWS Management Console?",
@@ -65,6 +70,7 @@ let questions = [
             C: "Enable multi-factor authentication",
             D: "Enable AWS CloudTrail"},
         correct: "C",
+        explanation: "– Multi-factor authentication (MFA) is a simple best practice that adds an extra layer of protection on top of a username and password. With MFA enabled, when a user signs in to an AWS Management Console, they will be prompted for their username and password (the first factor—what they know), as well as for an authentication code from their MFA device (the second factor—what they have). Taken together, these multiple factors provide increased security for AWS account settings and resources."
     },
     {
         question: "Which service can identify the user that made the API call when an Amazon EC2 instance is terminated?",
@@ -74,6 +80,7 @@ let questions = [
             C: "AWS X-Ray",
             D: "AWS Identity and Access Management (AWS IAM)"},
         correct: "B",
+        explanation: " AWS CloudTrail helps users enable governance, compliance, and operational and risk auditing of their AWS accounts. Actions taken by a user, role, or an AWS service are recorded as events in CloudTrail. Events include actions taken in the AWS Management Console, AWS Command Line Interface (CLI), and AWS SDKs and APIs."
     },
     {
         question: "Which service would be used to send alerts based on Amazon CloudWatch alarms?",
@@ -83,6 +90,7 @@ let questions = [
             C: "AWS Trusted Advisor",
             D: "Amazon Route 53"},
         correct: "A",
+        explanation: "Amazon SNS and Amazon CloudWatch are integrated so users can collect, view, and analyze metrics for every active SNS. Once users have configured CloudWatch for Amazon SNS, they can gain better insight into the performance of their Amazon SNS topics, push notifications, and SMS deliveries."
     },
     {
         question: "Where can a user find information about prohibited actions on the AWS infrastructure?",
@@ -92,5 +100,6 @@ let questions = [
             C: "AWS Billing Console",
             D: "AWS Acceptable Use Policy"},
         correct: "D",
+        explanation: "The AWS Acceptable Use Policy provides information regarding prohibited actions on the AWS infrastructure."
     },
 ];
