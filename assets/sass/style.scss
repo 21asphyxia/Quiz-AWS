@@ -29,7 +29,7 @@ body{
     max-height: 100vh;
     overflow-y: hidden;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
     .stepper{
@@ -103,20 +103,57 @@ body{
         }
       }
     }
+    h2{
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $secondary-color;
+    }
     .content{
       border: $secondary-color 5px solid;
       border-radius: 10px;
       text-align: justify;
-      margin-top: 20px;
       width: 70%;
       min-width: 390px;
       max-height: 50%;
-      padding: 20px;
+      padding: 10px 20px 10px 20px;
       overflow: auto;
+      p,h2{
+        text-align: center;
+      }
       ul{
         margin-block-start: 10px;
         margin-block-end: 1em;
         padding-inline-start: 30px
+      }
+      .cards{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 50px;
+        .card{
+          @media screen and (max-width: 768px){
+            flex: auto;
+          }
+          flex: 40%;
+          background-color: #263447;
+          border: 1px solid #ff8906;
+          color: #fff;
+          width: 350px;
+          height: 100px;
+          box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+          font-size: 20px;
+          font-weight: bold;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+          padding: 10px;
+          cursor: pointer;
+          &:hover{
+            transform: scale(1.05);
+            transition: all 0.2s;
+          }
+        }
       }
     }
   }
@@ -132,7 +169,6 @@ body{
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 20px;
   .btn{
     padding: 10px 20px;
     border-radius: 5px;
