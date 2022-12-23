@@ -43,14 +43,18 @@ function questionShower() {
     html = `<div class="cards">`;
     if(questions.length > 0){
         let question = questionPicker();
-        if (!content.previousElementSibling.classList.contains("question")) {
-            var questioncontent = document.createElement("h2");
-            questioncontent.classList.add("question");
-            questioncontent.innerText = question.question;
-            content.parentNode.insertBefore(questioncontent, content);
+        if (!content.previousElementSibling.classList.contains("countDown")) {
+            var questionContent = document.createElement("h2");
+            var countDown = document.createElement("div");
+            countDown.classList.add("countDown");
+            countDown.innerText = "Time left : 30";
+            questionContent.classList.add("question");
+            questionContent.innerText = question.question;
+            content.parentNode.insertBefore(questionContent, content);
+            content.parentNode.insertBefore(countDown, content);
         }
         else {
-            content.previousElementSibling.innerText = question.question;
+            document.querySelector(".question").innerText = question.question;
         }
         // For each loop for choices
         for (let choice in question.choices) {
@@ -59,6 +63,7 @@ function questionShower() {
         }
         html += `</div>`;
         content.innerHTML = html;
+        countDownSetter();
         // Add event listener to each card
         let cards = document.querySelectorAll(".card");
         cards.forEach(card => {
@@ -66,13 +71,15 @@ function questionShower() {
                 if (card.dataset.answer == question.correct) {
                     score++;
                 }
+                clearInterval(timer);
                 questionShower();
             });
         });
         quizQuestions.push(question);
     }
     else{
-        content.previousElementSibling.innerText = "You have completed the quiz!";
+        document.querySelector(".countDown").remove();
+        document.querySelector(".question").innerText = "You have completed the quiz!";
         html += `
         <button class="card" style="flex:unset;width:60%;">Click below to see Results!</button>`
         html += `</div>`;
@@ -87,6 +94,32 @@ function questionShower() {
             }
         }
     }
+}
+let timer;
+function countDownSetter() {
+    console.log(1);
+    let countDown = document.querySelector(".countDown");
+    let time = 29;
+    countDown.innerText = `Time left : 30`;
+    timer = setInterval(function() {
+        if(time <= 3 && time > 0){
+            countDown.classList.toggle("red");
+            setTimeout(function(){
+                countDown.classList.toggle("blinker");
+                countDown.classList.toggle("red");
+                setTimeout(function(){
+                    countDown.classList.toggle("blinker");
+                }, 900);
+            }, 100);
+        }
+        countDown.innerText = `Time left : ${time}`;
+        time--;
+        if (time < 0) {
+            
+            clearInterval(timer);
+            questionShower();
+        }
+    }, 1000);
 }
 
 function seeResults() {

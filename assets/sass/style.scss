@@ -109,6 +109,13 @@ body{
       font-weight: 600;
       color: $secondary-color;
     }
+    .countDown{
+      padding: 5px;
+      border-radius: 10px;
+      border: $secondary-color 5px solid;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
     .content{
       border: $secondary-color 5px solid;
       border-radius: 10px;
@@ -196,3 +203,32 @@ body{
     }
   }
 } 
+
+.blinker{
+  transition: color 0.9s ease-in-out;
+}
+
+.red{
+  color: red;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background:lighten($primary-color,20%)
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:lighten($secondary-color,10%);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
