@@ -1,5 +1,6 @@
 let score;
 let quizQuestions = [];
+let questionsCount = questions.length;
 function statusModifier($status) {
     if($status == 2 ){
         document.querySelector(".two").classList.add("active");
@@ -45,16 +46,25 @@ function questionShower() {
         let question = questionPicker();
         if (!content.previousElementSibling.classList.contains("countDown")) {
             var questionContent = document.createElement("h2");
+            var progressBar = document.createElement("div");
+            var progress = document.createElement("div");
+            progress.classList.add("progressCount");
             var countDown = document.createElement("div");
+            progressBar.classList.add("progressBar");
+            progress.innerText =  quizQuestions.length / questionsCount * 100 + "%";
             countDown.classList.add("countDown");
             countDown.innerText = "Time left : 30";
             questionContent.classList.add("question");
             questionContent.innerText = question.question;
+            progressBar.appendChild(progress);
             content.parentNode.insertBefore(questionContent, content);
+            content.parentNode.insertBefore(progressBar, content);
             content.parentNode.insertBefore(countDown, content);
         }
         else {
             document.querySelector(".question").innerText = question.question;
+            document.querySelector(".progressCount").innerText = quizQuestions.length / questionsCount * 100 + "%";
+            document.querySelector(".progressCount").style.width = quizQuestions.length / questionsCount * 100 + "%";
         }
         // For each loop for choices
         for (let choice in question.choices) {
@@ -79,6 +89,8 @@ function questionShower() {
     }
     else{
         document.querySelector(".countDown").remove();
+        document.querySelector(".progressCount").innerText = quizQuestions.length / questionsCount * 100 + "%";
+        document.querySelector(".progressCount").style.width = quizQuestions.length / questionsCount * 100 + "%";
         document.querySelector(".question").innerText = "You have completed the quiz!";
         html += `
         <button class="card" style="flex:unset;width:60%;">Click below to see Results!</button>`
@@ -125,6 +137,7 @@ function countDownSetter() {
 function seeResults() {
     document.querySelector(".content").innerHTML = `<h2>Results</h2>`;
     document.querySelector(".content").innerHTML += `<p>You got ${score} out of ${quizQuestions.length} questions correct!</p>`;
+    document.querySelector(".progressBar").remove();
     document.querySelector(".buttons").innerHTML = `<button class="btn next" id="restart">Restart Quiz</button>
     <button class="btn next" id="answers">See Answers</button>
     `;
