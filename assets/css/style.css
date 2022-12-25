@@ -20,6 +20,9 @@ body .main {
   align-items: center;
   flex-direction: column;
 }
+body .main .logo {
+  width: 200px;
+}
 body .main .stepper {
   margin-bottom: 10px;
   width: 400px;
