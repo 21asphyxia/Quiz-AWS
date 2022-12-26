@@ -203,6 +203,13 @@ body{
           margin-top: 12px;
           text-align: start;
         }
+        &.bgGreen{
+          background-color: fade-out(#00ff00, 0.5);
+          color: black;
+        }
+        &.bgRed{
+          background-color: red;
+        }
       }
     }
   }

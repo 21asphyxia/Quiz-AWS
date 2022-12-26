@@ -80,6 +80,7 @@ function questionShower() {
             card.addEventListener("click", function() {
                 if (card.dataset.answer == question.correct) {
                     score++;
+                    question.correctAnswer = true;
                 }
                 clearInterval(timer);
                 questionShower();
@@ -151,14 +152,18 @@ function seeResults() {
 
 function seeAnswers() {
     document.querySelector(".content").innerHTML = `<h2>Answers</h2>`;
+    let html;
     quizQuestions.forEach(question => {
-        document.querySelector(".content").innerHTML += `
-        <div class="answerCard">
+        (question.correctAnswer) ? html = `
+        <div class="answerCard bgGreen">` : html = `
+        <div class="answerCard bgRed">`;
+        html += `
             <h3>${question.question}</h3>
             <p>Correct Answer:<br> ${question.choices[question.correct]}</p>
             <p>Explanation :<br>${question.explanation}</p>
         </div>
-        `;
+        `
+        document.querySelector(".content").innerHTML += html;
     });
     document.querySelector(".buttons").innerHTML = `<button class="btn next" id="restart">Restart Quiz</button>`;
     document.querySelector("#restart").onclick = function() {

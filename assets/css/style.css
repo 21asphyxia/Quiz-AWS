@@ -205,6 +205,13 @@ body .main .content .answerCard p {
   margin-top: 12px;
   text-align: start;
 }
+body .main .content .answerCard.bgGreen {
+  background-color: rgba(0, 255, 0, 0.5);
+  color: black;
+}
+body .main .content .answerCard.bgRed {
+  background-color: red;
+}
 
 /* Progress Div Css  */
 .buttons {
