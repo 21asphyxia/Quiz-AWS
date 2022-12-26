@@ -195,6 +195,7 @@ body .main .content .cards .card:hover {
   transition: all 0.2s;
 }
 body .main .content .answerCard {
+  border: solid 3px #252F3E;
   background-color: #252F3E;
   color: #fff;
   padding: 10px;

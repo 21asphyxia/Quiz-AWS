@@ -194,6 +194,7 @@ body{
         }
       }
       .answerCard{
+        border: solid 3px $secondary-color;
         background-color: $secondary-color;
         color: #fff;
         padding: 10px;
