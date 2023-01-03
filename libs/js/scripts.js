@@ -1,6 +1,22 @@
 let score;
 let quizQuestions = [];
-let questionsCount = questions.length;
+let questions=[];
+
+//ajax
+function ajax(url, callback,method) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            callback(xhr.responseText);
+        }
+    }
+    xhr.open(method, url, true);
+    xhr.send();
+}
+
+
+
+
 function statusModifier($status) {
     if($status == 2 ){
         document.querySelector(".two").classList.add("active");
@@ -22,8 +38,12 @@ function statusModifier($status) {
 
 document.querySelector("#next").onclick = function() {
     if(!document.querySelector(".two").classList.contains("active")){
+        ajax("libs/php/Questions.class.php", function(response) {
+            questions = JSON.parse(response);
+            questionsCount = questions.length;
+            console.log(questionsCount);
         statusModifier(2);
-    }
+    },"POST");}
     else if(!document.querySelector(".three").classList.contains("active")){
         statusModifier(3);
     }
@@ -44,6 +64,7 @@ function questionShower() {
     html = `<div class="cards">`;
     if(questions.length > 0){
         let question = questionPicker();
+        console.log(question);
         if (!content.previousElementSibling.classList.contains("countDown")) {
             var questionContent = document.createElement("h2");
             var progressBar = document.createElement("div");
@@ -67,9 +88,18 @@ function questionShower() {
             document.querySelector(".progressCount").style.width = quizQuestions.length / questionsCount * 100 + "%";
         }
         // For each loop for choices
-        for (let choice in question.choices) {
+            // Destrucutre the choices
+            let choices=[];
+            Object.entries(question).forEach(([key,value]) => {
+                if(key.includes("choice")){
+                    // push key and value to choices
+                    key = key.replace("choice_", "");
+                    choices.push([key, value]);}
+                });
+                console.log(choices);
+                for (let choice in choices) {
             html += `
-            <button class="card" data-answer="${choice}">${question.choices[choice]}</button>`
+            <button class="card" data-answer="${choices[choice]["key"]}">${choices[choice]["value"]}</button>`
         }
         html += `</div>`;
         content.innerHTML = html;
@@ -86,7 +116,8 @@ function questionShower() {
                 questionShower();
             });
         });
-        quizQuestions.push(question);
+        quizQuestions.push([question["question"],choices]);
+        console.log(quizQuestions);
     }
     else{
         document.querySelector(".countDown").remove();
@@ -110,7 +141,6 @@ function questionShower() {
 }
 let timer;
 function countDownSetter() {
-    console.log(1);
     let countDown = document.querySelector(".countDown");
     let time = 29;
     countDown.innerText = `Time left : 30`;
