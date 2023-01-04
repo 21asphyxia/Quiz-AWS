@@ -1,6 +1,7 @@
 let score;
 let quizQuestions = [];
 let questions=[];
+let answers=[];
 
 //ajax
 function ajax(url, callback,method) {
@@ -41,12 +42,9 @@ document.querySelector("#next").onclick = function() {
         ajax("libs/php/Questions.class.php", function(response) {
             questions = JSON.parse(response);
             questionsCount = questions.length;
-            console.log(questionsCount);
         statusModifier(2);
+        
     },"POST");}
-    else if(!document.querySelector(".three").classList.contains("active")){
-        statusModifier(3);
-    }
 }
 
 function questionPicker() {
@@ -64,7 +62,6 @@ function questionShower() {
     html = `<div class="cards">`;
     if(questions.length > 0){
         let question = questionPicker();
-        console.log(question);
         if (!content.previousElementSibling.classList.contains("countDown")) {
             var questionContent = document.createElement("h2");
             var progressBar = document.createElement("div");
@@ -94,9 +91,11 @@ function questionShower() {
                 if(key.includes("choice")){
                     // push key and value to choices
                     key = key.replace("choice_", "");
-                    choices.push([key, value]);}
+                    choices.push({
+                        key,
+                        value
+                    });}
                 });
-                console.log(choices);
                 for (let choice in choices) {
             html += `
             <button class="card" data-answer="${choices[choice]["key"]}">${choices[choice]["value"]}</button>`
@@ -106,18 +105,21 @@ function questionShower() {
         countDownSetter();
         // Add event listener to each card
         let cards = document.querySelectorAll(".card");
+        let answer;
+        let data;
         cards.forEach(card => {
             card.addEventListener("click", function() {
-                if (card.dataset.answer == question.correct) {
-                    score++;
-                    question.correctAnswer = true;
-                }
+                answer = this.dataset.answer;
                 clearInterval(timer);
+                data={
+                    "question":question.id,
+                    "choice":answer,
+                }
+                quizQuestions.push(data);
+                console.log(quizQuestions);
                 questionShower();
             });
         });
-        quizQuestions.push([question["question"],choices]);
-        console.log(quizQuestions);
     }
     else{
         document.querySelector(".countDown").remove();
@@ -130,12 +132,13 @@ function questionShower() {
         content.innerHTML = html;
         document.querySelector(".buttons").innerHTML = `<button class="btn next" id="next">See Results</button>`;
         document.querySelector("#next").onclick = function() {
-            if(!document.querySelector(".two").classList.contains("active")){
-                statusModifier(2);
-            }
-            else if(!document.querySelector(".three").classList.contains("active")){
-                statusModifier(3);
-            }
+            if(!document.querySelector(".three").classList.contains("active")){
+                ajax("libs/php/Answers.class.php", function(response) {
+                    answers = JSON.parse(response);
+                    console.log(answers);
+                    statusModifier(3);
+            },"POST");}
+            
         }
     }
 }
@@ -166,6 +169,7 @@ function countDownSetter() {
 }
 
 function seeResults() {
+    
     document.querySelector(".content").innerHTML = `<h2>Results</h2>`;
     document.querySelector(".content").innerHTML += `<p>You got ${score} out of ${quizQuestions.length} questions correct!</p>`;
     document.querySelector(".progressBar").remove();
