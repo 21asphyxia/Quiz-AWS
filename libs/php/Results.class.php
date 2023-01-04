@@ -10,28 +10,21 @@ class Results extends Database {
     
     private function getBrowser(){
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $browser = "Unknown Browser";
-        $browser_array = array(
-            '/chrome/i'     => 'Chrome',
-            '/opera/i'      => 'Opera',
-            '/firefox/i'    => 'Firefox',
-            '/safari/i'     => 'Safari',
-            '/edge/i'       => 'Edge',
-            '/msie/i'       => 'Internet Explorer',
-            '/mobile/i'     => 'Mobile'
-        );
-        foreach ($browser_array as $regex => $value) { 
-            if (preg_match($regex, $user_agent)) {
-                $browser = $value;
-            }
-        }
-        return $browser;
+        
+        if (strpos($user_agent, 'Edg')) return 'Edge';
+        elseif (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) return 'Opera';
+        elseif (strpos($user_agent, 'Chrome')) return 'Chrome';
+        elseif (strpos($user_agent, 'Safari')) return 'Safari';
+        elseif (strpos($user_agent, 'Firefox')) return 'Firefox';
+        elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) return 'Internet Explorer';
+    
+        return 'Unkown Browser';
     }
 
     private function getOS(){
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $browser = "Unkown OS";
-        $browser_array = array(
+        $os = "Unknown OS";
+        $os_array = array(
             '/windows nt 10/i'      => 'Windows 10',
             '/windows nt 6.3/i'     => 'Windows 8.1',
             '/windows nt 6.2/i'     => 'Windows 8',
@@ -56,6 +49,12 @@ class Results extends Database {
             '/blackberry/i'         => 'BlackBerry',
             '/webos/i'              => 'Mobile'
         );
+        foreach ($os_array as $regex => $value) { 
+            if (preg_match($regex, $user_agent)) {
+                $os = $value;
+            }
+        }
+        return $os;
     }
 
     public function __construct() {
@@ -68,8 +67,16 @@ class Results extends Database {
 
     public function saveResult($score){
         $this->score = $score;
-        $sql = "INSERT INTO results (date, ip, score, os, browser) VALUES (:date, :ip, :score, :os, :browser)";
+        $sql = "INSERT INTO results (date_time, ip_address, score, os, browser) VALUES (:date, :ip, :score, :os, :browser)";
         $stmt = $this->con->prepare($sql);
         $stmt->execute(['date' => $this->date, 'ip' => $this->ip, 'score' => $this->score, 'os' => $this->os, 'browser' => $this->browser]);
     }
+}
+echo "<pre>";
+print_r($_SERVER);
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $score = $_POST['score'];
+    $results = new Results();
+    $results->saveResult($score);
 }

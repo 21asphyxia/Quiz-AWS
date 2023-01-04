@@ -177,6 +177,10 @@ function seeResults() {
             score++;
         }
     });
+    ajax("libs/php/Results.class.php", function(response) {
+        console.log(response);
+    },"POST", "score="+score);
+
     document.querySelector(".content").innerHTML = `<h2>Results</h2>`;
     document.querySelector(".content").innerHTML += `<p>You got ${score} out of ${quizQuestions.length} questions correct!</p>`;
     document.querySelector(".progressBar").remove();
