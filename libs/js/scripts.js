@@ -1,6 +1,23 @@
 let score;
 let quizQuestions = [];
-let questionsCount = questions.length;
+let questions=[];
+let answers=[];
+
+//ajax
+function ajax(url, callback,method) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            callback(xhr.responseText);
+        }
+    }
+    xhr.open(method, url, true);
+    xhr.send();
+}
+
+
+
+
 function statusModifier($status) {
     if($status == 2 ){
         document.querySelector(".two").classList.add("active");
@@ -22,11 +39,12 @@ function statusModifier($status) {
 
 document.querySelector("#next").onclick = function() {
     if(!document.querySelector(".two").classList.contains("active")){
+        ajax("libs/php/Questions.class.php", function(response) {
+            questions = JSON.parse(response);
+            questionsCount = questions.length;
         statusModifier(2);
-    }
-    else if(!document.querySelector(".three").classList.contains("active")){
-        statusModifier(3);
-    }
+        
+    },"POST");}
 }
 
 function questionPicker() {
@@ -67,26 +85,41 @@ function questionShower() {
             document.querySelector(".progressCount").style.width = quizQuestions.length / questionsCount * 100 + "%";
         }
         // For each loop for choices
-        for (let choice in question.choices) {
+            // Destrucutre the choices
+            let choices=[];
+            Object.entries(question).forEach(([key,value]) => {
+                if(key.includes("choice")){
+                    // push key and value to choices
+                    key = key.replace("choice_", "");
+                    choices.push({
+                        key,
+                        value
+                    });}
+                });
+                for (let choice in choices) {
             html += `
-            <button class="card" data-answer="${choice}">${question.choices[choice]}</button>`
+            <button class="card" data-answer="${choices[choice]["key"]}">${choices[choice]["value"]}</button>`
         }
         html += `</div>`;
         content.innerHTML = html;
         countDownSetter();
         // Add event listener to each card
         let cards = document.querySelectorAll(".card");
+        let answer;
+        let data;
         cards.forEach(card => {
             card.addEventListener("click", function() {
-                if (card.dataset.answer == question.correct) {
-                    score++;
-                    question.correctAnswer = true;
-                }
+                answer = this.dataset.answer;
                 clearInterval(timer);
+                data={
+                    "question":question.id,
+                    "choice":answer,
+                }
+                quizQuestions.push(data);
+                console.log(quizQuestions);
                 questionShower();
             });
         });
-        quizQuestions.push(question);
     }
     else{
         document.querySelector(".countDown").remove();
@@ -99,18 +132,18 @@ function questionShower() {
         content.innerHTML = html;
         document.querySelector(".buttons").innerHTML = `<button class="btn next" id="next">See Results</button>`;
         document.querySelector("#next").onclick = function() {
-            if(!document.querySelector(".two").classList.contains("active")){
-                statusModifier(2);
-            }
-            else if(!document.querySelector(".three").classList.contains("active")){
-                statusModifier(3);
-            }
+            if(!document.querySelector(".three").classList.contains("active")){
+                ajax("libs/php/Answers.class.php", function(response) {
+                    answers = JSON.parse(response);
+                    console.log(answers);
+                    statusModifier(3);
+            },"POST");}
+            
         }
     }
 }
 let timer;
 function countDownSetter() {
-    console.log(1);
     let countDown = document.querySelector(".countDown");
     let time = 29;
     countDown.innerText = `Time left : 30`;
@@ -136,6 +169,7 @@ function countDownSetter() {
 }
 
 function seeResults() {
+    
     document.querySelector(".content").innerHTML = `<h2>Results</h2>`;
     document.querySelector(".content").innerHTML += `<p>You got ${score} out of ${quizQuestions.length} questions correct!</p>`;
     document.querySelector(".progressBar").remove();
