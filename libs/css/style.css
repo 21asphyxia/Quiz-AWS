@@ -202,7 +202,7 @@ body .main .content .answerCard {
   margin-bottom: 10px;
   border-radius: 10px;
 }
-body .main .content .answerCard p {
+body .main .content .answerCard p, body .main .content .answerCard h4 {
   margin-top: 12px;
   text-align: start;
 }

@@ -4,7 +4,7 @@ let questions=[];
 let answers=[];
 
 //ajax
-function ajax(url, callback,method) {
+function ajax(url, callback,method,data=null) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -12,7 +12,9 @@ function ajax(url, callback,method) {
         }
     }
     xhr.open(method, url, true);
-    xhr.send();
+    if(data != null)
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
 }
 
 
@@ -114,6 +116,7 @@ function questionShower() {
                 data={
                     "question":question.id,
                     "choice":answer,
+                    "answers":choices
                 }
                 quizQuestions.push(data);
                 console.log(quizQuestions);
@@ -137,8 +140,8 @@ function questionShower() {
                     answers = JSON.parse(response);
                     console.log(answers);
                     statusModifier(3);
-            },"POST");}
-            
+            },"POST", "data="+JSON.stringify(quizQuestions));
+            }
         }
     }
 }
@@ -169,7 +172,11 @@ function countDownSetter() {
 }
 
 function seeResults() {
-    
+    answers.forEach(answer => {
+        if(answer.choice == answer.correct_answer){
+            score++;
+        }
+    });
     document.querySelector(".content").innerHTML = `<h2>Results</h2>`;
     document.querySelector(".content").innerHTML += `<p>You got ${score} out of ${quizQuestions.length} questions correct!</p>`;
     document.querySelector(".progressBar").remove();
@@ -187,14 +194,21 @@ function seeResults() {
 function seeAnswers() {
     document.querySelector(".content").innerHTML = `<h2>Answers</h2>`;
     let html;
-    quizQuestions.forEach(question => {
-        (question.correctAnswer) ? html = `
+    answers.forEach(answer => {
+        // get the correct answer
+        let correctAnswer;
+        answer.answers.forEach(choice => {
+            if(choice.key == answer.correct_answer){
+                correctAnswer = choice.value;
+            }
+        });
+        (answer.choice == answer.correct_answer) ? html = `
         <div class="answerCard bgGreen">` : html = `
         <div class="answerCard bgRed">`;
         html += `
-            <h3>${question.question}</h3>
-            <p>Correct Answer:<br> ${question.choices[question.correct]}</p>
-            <p>Explanation :<br>${question.explanation}</p>
+            <h3>${answer.question}</h3>
+            <h4>Correct Answer:</h4><p> ${correctAnswer}</p>
+            <h4>Explanation :</h4><p>${answer.explanation}</p>
         </div>
         `
         document.querySelector(".content").innerHTML += html;
