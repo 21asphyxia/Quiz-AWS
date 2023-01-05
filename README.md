@@ -8,6 +8,6 @@
 * User's information (score, date, IP address, browser, and OS) are saved in the database.
 
 ## Contributors
-* @21asphyxia
-
-**Full Changelog**: https://github.com/21asphyxia/Quizizy-AWS/commits
+[@21asphyxia](https://github.com/21asphyxia)
+##
+### [Full Changelog](https://github.com/21asphyxia/Quizizy-AWS/commits)
